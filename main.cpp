@@ -10,7 +10,7 @@ void checkOff(void);
 #define LIMIT_BACK          15
 #define LIMIT_SIDE          13
 
-int turnTime = 5000;        //calibrate this based on how long to turn 90deg
+int turnTime = 500000;        //calibrate this based on how long to turn 90deg
 int reloadTime = 7000000;   //pauses for 7s to reload the balls
 int shootTime = 1000000;    //waits a second between shooting each ball
 int ballCounter = 0; 
