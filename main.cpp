@@ -1,73 +1,71 @@
 #include <Arduino.h>
 #include <IntervalTimer.h>
+#include <Motors.h>
+#include <Launcher.h>
 
-int checkSwitches(void);
+void checkOff(void);
 
 //Global variables
-#define LEFT_MOTOR_ENABLE   3
-#define LEFT_MOTOR_DIR1     4
-#define LEFT_MOTOR_DIR2     5
-#define RIGHT_MOTOR_ENABLE  22
-#define RIGHT_MOTOR_DIR1     23
-#define RIGHT_MOTOR_DIR2     21
 #define LIMIT_FRONT         14
 #define LIMIT_BACK          15
+#define LIMIT_SIDE          13
 
-int left_dir1 = HIGH;
-int right_dir1 = HIGH;
-int left_dir2 = LOW;
-int right_dir2 = LOW;
-int speed = 127;
+int turnTime = 5000;        //calibrate this based on how long to turn 90deg
+int reloadTime = 7000000;   //pauses for 7s to reload the balls
+int shootTime = 1000000;    //waits a second between shooting each ball
+int ballCounter = 0; 
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+
   while(!Serial);
-  pinMode(LEFT_MOTOR_ENABLE, OUTPUT);
-  pinMode(LEFT_MOTOR_DIR1, OUTPUT);
-  pinMode(LEFT_MOTOR_DIR2, OUTPUT);
-  pinMode(RIGHT_MOTOR_ENABLE, OUTPUT);
-  pinMode(RIGHT_MOTOR_DIR1, OUTPUT);
-  pinMode(RIGHT_MOTOR_DIR2, OUTPUT);
+
   pinMode(LIMIT_FRONT, INPUT_PULLUP);
   pinMode(LIMIT_BACK, INPUT_PULLUP);
+  pinMode(LIMIT_SIDE, INPUT_PULLUP);
+
+  //Start of the check-off process
+  checkOff();
+
+  //Eventually start the good code after check-off
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  analogWrite(LEFT_MOTOR_ENABLE, speed);
-  analogWrite(RIGHT_MOTOR_ENABLE, speed);
-  
-  int sideHit = checkSwitches();
-  if (sideHit == 0){
-    //do nothing
-  }
-  else if (sideHit == 1){
-    //Front limit switch hit; set both motors to low
-    left_dir1 = LOW;
-    right_dir1 = LOW;
-    left_dir2 = HIGH;
-    right_dir2 = HIGH;
-    digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
-    digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
-    digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
-    digitalWrite(RIGHT_MOTOR_DIR2, right_dir2);
-  }
-  else if (sideHit == 2){
-    //Back limit switch hit; set both motors to high
-    left_dir1 = HIGH;
-    right_dir1 = HIGH;
-    left_dir2 = LOW;
-    right_dir2 = LOW;
-    digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
-    digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
-    digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
-    digitalWrite(RIGHT_MOTOR_DIR2, right_dir2);
-  }
+  //With check-off hard coding nothing should be on loop
 }
 
-int checkSwitches(void){
-  if(LIMIT_FRONT) return 1;
-  if(LIMIT_BACK) return 2;
-  return 0;
+void checkOff() {
+  //Moves the robot to the back of the arena and then turns right
+  motors.moveForward();
+  while(!digitalRead(LIMIT_FRONT)){
+    //wait
+  }
+  motors.turnRight();
+  delay(turnTime);  
+  //Moves the robot across the arena to the armoury, pausing when it hits the switch for 7 seconds
+  motors.moveForward();
+  while(!digitalRead(LIMIT_FRONT)){
+    //wait
+  }
+  motors.stopMotors();
+  delay(reloadTime); 
+  //Turns the robot to move away from the switch to leave the armoury
+  motors.turnRight();
+  delay(turnTime);
+  //Move to the front wall and start shooting at Casterly Rock
+  motors.moveForward();
+  while(digitalRead(LIMIT_FRONT)){
+    //wait
+  }
+  motors.stopMotors();
+  //Starts launching the balls at Casterly Rock
+  launcher.startFlywheel();
+  while (ballCounter < 6){
+    launcher.incrementBall();
+    delay(shootTime);
+    ballCounter++;
+  }
+  launcher.stopFlywheel();
 }
