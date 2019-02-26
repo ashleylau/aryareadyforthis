@@ -4,10 +4,12 @@
 #include <Launcher.h>
 
 void checkOff(void);
+void RespToKey(void);
+void CheckEvents(void);
 
 //Global variables
-#define LIMIT_FRONT         14
-#define LIMIT_BACK          15
+#define LIMIT_FRONT         15
+#define LIMIT_BACK          14
 #define LIMIT_SIDE          13
 
 int turnTime = 500000;        //calibrate this based on how long to turn 90deg
@@ -24,17 +26,31 @@ void setup() {
   pinMode(LIMIT_FRONT, INPUT_PULLUP);
   pinMode(LIMIT_BACK, INPUT_PULLUP);
   pinMode(LIMIT_SIDE, INPUT_PULLUP);
+  
+  
+  motors.stopMotors();
 
   //Start of the check-off process
-  checkOff();
-
+  //checkOff();
   //Eventually start the good code after check-off
+
 }
 
 void loop() {
+  
+  motors.moveForward();
+  delay(500000);
+  motors.moveBackward();
+  delay(500000);
+
   // put your main code here, to run repeatedly:
   //With check-off hard coding nothing should be on loop
+  //RespToKey();
+  
+  CheckEvents();
+
 }
+
 
 void checkOff() {
   //Moves the robot to the back of the arena and then turns right
@@ -69,4 +85,25 @@ void checkOff() {
   }
   launcher.stopFlywheel();
   launcher.returnRotator();
+}
+
+void CheckEvents(){
+  if(digitalRead(LIMIT_FRONT)){
+    Serial.println("HIT");
+  }
+}
+
+void RespToKey(){
+  uint8_t theKey;
+  theKey = Serial.read();
+  
+  /*
+   if(theKey == 'f'){
+     motors.moveForward();
+   } else if(theKey == 'r'){
+     motors.moveBackward();
+   } else if(theKey == 's'){
+     motors.stopMotors();
+   }
+  */
 }
