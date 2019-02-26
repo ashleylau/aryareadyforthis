@@ -4,8 +4,8 @@
 /*----------Global Variables----------*/
 int left_dir1 = LOW;
 int left_dir2 = HIGH;
-int right_dir1 = LOW;
-int right_dir2 = HIGH;
+int right_dir1 = HIGH;
+int right_dir2 = LOW;
 int speed = 255;
 int stop = 0;
 
@@ -27,8 +27,8 @@ Returns:      Nothing; function is of type void
 void MotorsClass::moveForward(){
     left_dir1 = LOW;
     left_dir2 = HIGH;
-    right_dir1 = LOW;
-    right_dir2 = HIGH;
+    right_dir1 = HIGH;
+    right_dir2 = LOW;
     digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
     digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
     digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
@@ -45,8 +45,8 @@ Returns:      Nothing; function is of type void
 void MotorsClass::moveBackward(){
     left_dir1 = HIGH;
     left_dir2 = LOW;
-    right_dir1 = HIGH;
-    right_dir2 = LOW;
+    right_dir1 = LOW;
+    right_dir2 = HIGH;
     digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
     digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
     digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
@@ -63,8 +63,8 @@ Returns:      Nothing; function is of type void
 void MotorsClass::turnLeft(){
     left_dir1 = HIGH;
     left_dir2 = LOW;
-    right_dir1 = LOW;
-    right_dir2 = HIGH;
+    right_dir1 = HIGH;
+    right_dir2 = LOW;
     digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
     digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
     digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
@@ -73,7 +73,7 @@ void MotorsClass::turnLeft(){
 
 /******************************************************************************
 Function:     turnRight
-Contents:     This function is used to set the leftt motor to spin forward and the
+Contents:     This function is used to set the left motor to spin forward and the
               right motor to spin backward, moving the robot in a circle to the right.
 Parameters:   None
 Returns:      Nothing; function is of type void
@@ -81,8 +81,8 @@ Returns:      Nothing; function is of type void
 void MotorsClass::turnRight(){
     left_dir1 = LOW;
     left_dir2 = HIGH;
-    right_dir1 = HIGH;
-    right_dir2 = LOW;
+    right_dir1 = LOW;
+    right_dir2 = HIGH;
     digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
     digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
     digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
