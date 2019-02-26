@@ -4,11 +4,9 @@
 #include <PWMServo.h>
 
 /*----------Global Variables----------*/
-int dir1 = LOW;
-int dir2 = HIGH;
-int flywheelSpeed = 255;
+int flywheelGo = 1;
 int flywheelStop = 0;
-int angle = 52;
+int angle = 38;
 
 Servo myservo;
 
@@ -27,9 +25,7 @@ Parameters:   None; if later set to move at different speeds this can be include
 Returns:      Nothing; function is of type void
 ******************************************************************************/
 void LauncherClass::startFlywheel(){
-    digitalWrite(FLYWHEEL_DIR1, dir1);
-    digitalWrite(FLYWHEEL_DIR2, dir2);
-    analogWrite(FLYWHEEL_ENABLE, flywheelSpeed);
+    digitalWrite(FLYWHEEL, flywheelGo);
 }
 
 /******************************************************************************
@@ -39,7 +35,7 @@ Parameters:   None; if later set to move at different speeds this can be include
 Returns:      Nothing; function is of type void
 ******************************************************************************/
 void LauncherClass::stopFlywheel(){
-    analogWrite(FLYWHEEL_ENABLE, flywheelStop);
+    digitalWrite(FLYWHEEL, flywheelStop);
 }
 
 /******************************************************************************
@@ -52,15 +48,23 @@ void LauncherClass::incrementBall(){
     myservo.write(angle);
 }
 
+/******************************************************************************
+Function:     resetBall
+Contents:     This function is used to return the rotater to its starting position.
+Parameters:   None
+Returns:      Nothing; function is of type void
+******************************************************************************/
+void LauncherClass::returnRotator(){
+    myservo.write(-270);
+}
+
 /*----------Private Functions---------*/
 //Private function to initialize pins when the motor class is first included
 void LauncherClass::begin( ) { 
   Serial.begin(9600);
 
   //  Set up the pin modes
-  pinMode(FLYWHEEL_ENABLE, OUTPUT);
-  pinMode(FLYWHEEL_DIR1, OUTPUT);
-  pinMode(FLYWHEEL_DIR2, OUTPUT);
+  pinMode(FLYWHEEL, OUTPUT);
   pinMode(SERVO, OUTPUT);
 
   //Set up servo

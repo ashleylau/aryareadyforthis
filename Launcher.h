@@ -3,9 +3,7 @@
 
 /*--------------Global Variables----------------*/
 //Flywheel motor pins defined as if using motor driver that requires 3 output pins
-#define FLYWHEEL_ENABLE     10  //PWM pin
-#define FLYWHEEL_DIR1       11  //Not PWM
-#define FLYWHEEL_DIR2       12  //Not PWM
+#define FLYWHEEL            12  //Not PWM
 #define SERVO               21  //PWM pin
 
 class LauncherClass{
@@ -14,6 +12,7 @@ class LauncherClass{
         void startFlywheel();
         void stopFlywheel();
         void incrementBall();
+        void returnRotator();
     private:
         void begin();
 };

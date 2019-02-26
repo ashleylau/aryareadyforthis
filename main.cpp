@@ -68,4 +68,5 @@ void checkOff() {
     ballCounter++;
   }
   launcher.stopFlywheel();
+  launcher.returnRotator();
 }
