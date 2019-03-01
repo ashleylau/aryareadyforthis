@@ -15,6 +15,7 @@ class MotorsClass{
         MotorsClass();
         void moveForward();
         void moveBackward();
+        void rideWall();
         void moveLeft();
         void moveRight();
         void stopMoving();
