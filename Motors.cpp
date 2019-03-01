@@ -6,7 +6,8 @@ int front_back_dir1 = LOW;
 int front_back_dir2 = HIGH;
 int left_right_dir1 = LOW;
 int left_right_dir2 = HIGH;
-int speed = 30; 
+int high_speed = 30; 
+int low_speed = 4;
 int stop = 0;
 
 MotorsClass motors;
@@ -30,7 +31,7 @@ void MotorsClass::moveForward(){
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
     analogWrite(FRONT_BACK_ENABLE, stop);
-    analogWrite(LEFT_RIGHT_ENABLE, speed);
+    analogWrite(LEFT_RIGHT_ENABLE, high_speed);
 }
 
 /******************************************************************************
@@ -46,7 +47,7 @@ void MotorsClass::moveBackward(){
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
     analogWrite(FRONT_BACK_ENABLE, stop);
-    analogWrite(LEFT_RIGHT_ENABLE, speed);
+    analogWrite(LEFT_RIGHT_ENABLE, high_speed);
 }
 
 /******************************************************************************
@@ -62,7 +63,24 @@ void MotorsClass::moveLeft(){
     digitalWrite(FRONT_BACK_DIR1, front_back_dir1);
     digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
     analogWrite(LEFT_RIGHT_ENABLE, stop);
-    analogWrite(FRONT_BACK_ENABLE, speed);
+    analogWrite(FRONT_BACK_ENABLE, high_speed);
+}
+
+void MotorsClass::rideWall(){
+     //To armory!
+    left_right_dir1 = HIGH;
+    left_right_dir2 = LOW;
+    front_back_dir1 = LOW;
+    front_back_dir2 = HIGH;
+
+    //From moveBackward:
+    digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
+    digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
+    digitalWrite(FRONT_BACK_DIR1, front_back_dir1);
+    digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
+    analogWrite(FRONT_BACK_ENABLE, high_speed);
+    analogWrite(LEFT_RIGHT_ENABLE, low_speed);
+
 }
 
 /******************************************************************************
@@ -78,7 +96,7 @@ void MotorsClass::moveRight(){
     digitalWrite(FRONT_BACK_DIR1, front_back_dir1);
     digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
     analogWrite(LEFT_RIGHT_ENABLE, stop);
-    analogWrite(FRONT_BACK_ENABLE, speed);
+    analogWrite(FRONT_BACK_ENABLE, high_speed);
 }
 
 /******************************************************************************
