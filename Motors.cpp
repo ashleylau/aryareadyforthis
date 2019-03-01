@@ -73,7 +73,7 @@ void MotorsClass::rideWall(){
     front_back_dir1 = LOW;
     front_back_dir2 = HIGH;
 
-    //From moveBackward:
+    
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
     digitalWrite(FRONT_BACK_DIR1, front_back_dir1);
