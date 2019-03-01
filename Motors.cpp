@@ -2,11 +2,11 @@
 #include <Arduino.h>
 
 /*----------Global Variables----------*/
-int left_dir1 = LOW;
-int left_dir2 = HIGH;
-int right_dir1 = HIGH;
-int right_dir2 = LOW;
-int speed = 255;
+int front_back_dir1 = LOW;
+int front_back_dir2 = HIGH;
+int left_right_dir1 = LOW;
+int left_right_dir2 = HIGH;
+int speed = 30; 
 int stop = 0;
 
 MotorsClass motors;
@@ -19,74 +19,66 @@ MotorsClass::MotorsClass()
 }
 /******************************************************************************
 Function:     moveForward
-Contents:     This function is used to set both the left and right motor to spin
+Contents:     This function is used to set both the forward and backward motors to spin
               in the forward direction, moving the robot forward in a straight line.
 Parameters:   None; if later set to move at different speeds this can be included.
 Returns:      Nothing; function is of type void
 ******************************************************************************/
 void MotorsClass::moveForward(){
-    left_dir1 = LOW;
-    left_dir2 = HIGH;
-    right_dir1 = HIGH;
-    right_dir2 = LOW;
-    digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
-    digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
-    digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
-    digitalWrite(RIGHT_MOTOR_DIR2, right_dir2);
+    left_right_dir1 = LOW;
+    left_right_dir2 = HIGH;
+    digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
+    digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
+    analogWrite(FRONT_BACK_ENABLE, stop);
+    analogWrite(LEFT_RIGHT_ENABLE, speed);
 }
 
 /******************************************************************************
 Function:     moveBackward
-Contents:     This function is used to set both the left and right motor to spin
-              in the backward direction, moving the robot backwareds in a straight line.
+Contents:     This function is used to set both the forward and backward motors to spin
+              in the backward direction, moving the robot backwards in a straight line.
 Parameters:   None; if later set to move at different speeds this can be included.
 Returns:      Nothing; function is of type void
 ******************************************************************************/
 void MotorsClass::moveBackward(){
-    left_dir1 = HIGH;
-    left_dir2 = LOW;
-    right_dir1 = LOW;
-    right_dir2 = HIGH;
-    digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
-    digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
-    digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
-    digitalWrite(RIGHT_MOTOR_DIR2, right_dir2);
+    left_right_dir1 = HIGH;
+    left_right_dir2 = LOW;
+    digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
+    digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
+    analogWrite(FRONT_BACK_ENABLE, stop);
+    analogWrite(LEFT_RIGHT_ENABLE, speed);
 }
 
 /******************************************************************************
-Function:     turnLeft
-Contents:     This function is used to set the left motor to spin backward and the
-              right motor to spin forward, moving the robot in a circle to the left.
+Function:     moveLeft
+Contents:     This function is used to set the left and right motors to spin forward,
+              moving the robot to the left. (if going right, switch HIGH/LOW)
 Parameters:   None
 Returns:      Nothing; function is of type void
 ******************************************************************************/
-void MotorsClass::turnLeft(){
-    left_dir1 = HIGH;
-    left_dir2 = LOW;
-    right_dir1 = HIGH;
-    right_dir2 = LOW;
-    digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
-    digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
-    digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
-    digitalWrite(RIGHT_MOTOR_DIR2, right_dir2);
+void MotorsClass::moveLeft(){
+    front_back_dir1 = LOW;
+    front_back_dir2 = HIGH;
+    digitalWrite(FRONT_BACK_DIR1, front_back_dir1);
+    digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
+    analogWrite(LEFT_RIGHT_ENABLE, stop);
+    analogWrite(FRONT_BACK_ENABLE, speed);
 }
 
 /******************************************************************************
-Function:     turnRight
-Contents:     This function is used to set the left motor to spin forward and the
-              right motor to spin backward, moving the robot in a circle to the right.
+Function:     moveRight
+Contents:     This function is used to set the left and right motors to spin backwards
+               moving the robot to the right.
 Parameters:   None
 Returns:      Nothing; function is of type void
 ******************************************************************************/
-void MotorsClass::turnRight(){
-    left_dir1 = LOW;
-    left_dir2 = HIGH;
-    right_dir1 = LOW;
-    right_dir2 = HIGH;
-    digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
-    digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
-    digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
-    digitalWrite(RIGHT_MOTOR_DIR2, right_dir2);
+void MotorsClass::moveRight(){
+    front_back_dir1 = HIGH;
+    front_back_dir2 = LOW;
+    digitalWrite(FRONT_BACK_DIR1, front_back_dir1);
+    digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
+    analogWrite(LEFT_RIGHT_ENABLE, stop);
+    analogWrite(FRONT_BACK_ENABLE, speed);
 }
 
 /******************************************************************************
@@ -95,9 +87,9 @@ Contents:     This function is used to turn both motors off, stopping the robot.
 Parameters:   None
 Returns:      Nothing; function is of type void
 ******************************************************************************/
-void MotorsClass::stopMotors(){
-    analogWrite(LEFT_MOTOR_ENABLE, stop);
-    analogWrite(RIGHT_MOTOR_ENABLE, stop);
+void MotorsClass::stopMoving(){
+    analogWrite(LEFT_RIGHT_ENABLE, stop);
+    analogWrite(FRONT_BACK_ENABLE, stop);
 }
 
 /*----------Private Functions---------*/
@@ -106,18 +98,18 @@ void MotorsClass::begin( ) {
   Serial.begin(9600);
 
   //  Set up the pin modes
-  pinMode(LEFT_MOTOR_ENABLE, OUTPUT);
-  pinMode(LEFT_MOTOR_DIR1, OUTPUT);
-  pinMode(LEFT_MOTOR_DIR2, OUTPUT);
-  pinMode(RIGHT_MOTOR_ENABLE, OUTPUT);
-  pinMode(RIGHT_MOTOR_DIR1, OUTPUT);
-  pinMode(RIGHT_MOTOR_DIR2, OUTPUT);
+  pinMode(LEFT_RIGHT_ENABLE, OUTPUT);
+  pinMode(LEFT_RIGHT_DIR1, OUTPUT);
+  pinMode(LEFT_RIGHT_DIR2, OUTPUT);
+  pinMode(FRONT_BACK_ENABLE, OUTPUT);
+  pinMode(FRONT_BACK_DIR1, OUTPUT);
+  pinMode(FRONT_BACK_DIR2, OUTPUT);
 
   //  Set the speeds and directions to initial values
-  digitalWrite(LEFT_MOTOR_DIR1, left_dir1);
-  digitalWrite(LEFT_MOTOR_DIR2, left_dir2);
-  digitalWrite(RIGHT_MOTOR_DIR1, right_dir1);
-  digitalWrite(RIGHT_MOTOR_DIR2, right_dir2);
-  analogWrite(LEFT_MOTOR_ENABLE, speed);
-  analogWrite(RIGHT_MOTOR_ENABLE, speed);
+  digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
+  digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
+  digitalWrite(FRONT_BACK_DIR1, front_back_dir1);
+  digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
+  analogWrite(LEFT_RIGHT_ENABLE, stop);
+  analogWrite(FRONT_BACK_ENABLE, stop);
 }

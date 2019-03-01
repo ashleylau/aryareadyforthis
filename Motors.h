@@ -2,21 +2,22 @@
 #define Motors_h
 
 /*--------------Global Variables----------------*/
-#define LEFT_MOTOR_ENABLE   3   //PWM pin
-#define LEFT_MOTOR_DIR1     2   //Not PWM pin
-#define LEFT_MOTOR_DIR2     1   //Not PWM
-#define RIGHT_MOTOR_ENABLE  20  //PWM
-#define RIGHT_MOTOR_DIR1    19  //Not PWM
-#define RIGHT_MOTOR_DIR2    18  //Not PWM
+#define LEFT_RIGHT_DIR1         1   //Not PWM
+#define LEFT_RIGHT_DIR2         2   //Not PWM
+#define LEFT_RIGHT_ENABLE       3   //PWM
+
+#define FRONT_BACK_DIR1         18  //Not PWM
+#define FRONT_BACK_DIR2         19  //Not PWM
+#define FRONT_BACK_ENABLE       20  //PWM
 
 class MotorsClass{
     public:
         MotorsClass();
         void moveForward();
         void moveBackward();
-        void turnLeft();
-        void turnRight();
-        void stopMotors();
+        void moveLeft();
+        void moveRight();
+        void stopMoving();
     private:
         void begin();
 };
