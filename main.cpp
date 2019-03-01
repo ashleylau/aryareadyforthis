@@ -43,8 +43,8 @@ void checkOff() {
     //wait
   }
   //Moves the robot across the arena to the armoury, pausing when it hits the switch for 7 seconds
-  motors.moveLeft(); 
-  Serial.println("Moving left; hit left limit switch to pause");
+  motors.rideWall(); 
+  Serial.println("Riding wall left; hit left limit switch to pause");
   while(!digitalRead(LIMIT_LEFT)){
     //wait
   }
