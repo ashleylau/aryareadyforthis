@@ -4,7 +4,7 @@
 /*--------------Global Variables----------------*/
 //Flywheel motor pins defined as if using motor driver that requires 3 output pins
 #define FLYWHEEL            12  //Not PWM
-#define SERVO               21  //PWM pin
+#define SERVO               6  //PWM pin
 
 class LauncherClass{
     public:

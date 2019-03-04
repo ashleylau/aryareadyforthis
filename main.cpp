@@ -12,7 +12,7 @@ void checkOff(void);
 
 int turnTime = 1000;        //calibrate this based on how long to turn 90deg
 int reloadTime = 5000;   //pauses for 7s to reload the balls
-int shootTime = 10000;    //waits a second between shooting each ball
+int shootTime = 5000;    //waits a second between shooting each ball
 int ballCounter = 0; 
 
 void setup() {
@@ -37,14 +37,14 @@ void loop() {
 
 void checkOff() {
   //Moves the robot to the back of the arena and then turns right
-  motors.moveBackward();
+  /*motors.moveBackward();
   Serial.println("Moving backward; hit front limit switch to move left");
   while(!digitalRead(LIMIT_BACK)){
     //wait
   }
   //Moves the robot across the arena to the armoury, pausing when it hits the switch for 7 seconds
-  motors.rideWall(); 
-  Serial.println("Riding wall left; hit left limit switch to pause");
+  motors.moveLeft(); 
+  Serial.println("Moving left; hit left limit switch to pause");
   while(!digitalRead(LIMIT_LEFT)){
     //wait
   }
@@ -64,14 +64,14 @@ void checkOff() {
     //wait
   }
   motors.stopMoving();
+  */
   //Starts launching the balls at Casterly Rock
   launcher.startFlywheel();
-  while (ballCounter < 6){
+  while (ballCounter < 12){
     launcher.incrementBall();
     Serial.println("Shoot ball");
-    delay(shootTime);
+    delay(ballCounter + shootTime);
     ballCounter++;
   }
   launcher.stopFlywheel();
-  launcher.returnRotator();
 }

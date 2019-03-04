@@ -4,9 +4,12 @@
 #include <PWMServo.h>
 
 /*----------Global Variables----------*/
+int servoStop = 1500;
+int servoCC   = 1350;
+int servoCW   = 1650; 
 int flywheelGo = 1;
 int flywheelStop = 0;
-int angle = 38;
+
 
 Servo myservo;
 
@@ -45,7 +48,9 @@ Parameters:   None; if later set to move at different speeds this can be include
 Returns:      Nothing; function is of type void
 ******************************************************************************/
 void LauncherClass::incrementBall(){
-    myservo.write(angle);
+    myservo.writeMicroseconds(servoCC);
+    delay(460);
+    myservo.writeMicroseconds(servoStop);
 }
 
 /******************************************************************************
