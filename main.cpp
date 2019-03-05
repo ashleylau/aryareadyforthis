@@ -9,10 +9,11 @@ void checkOff(void);
 #define LIMIT_FRONT         15
 #define LIMIT_BACK          14
 #define LIMIT_LEFT          13
+#define LIMIT_SERVO         8
 
 int turnTime = 1000;        //calibrate this based on how long to turn 90deg
 int reloadTime = 5000;   //pauses for 7s to reload the balls
-int shootTime = 5000;    //waits a second between shooting each ball
+int shootTime = 10000;    //waits a second between shooting each ball
 int ballCounter = 0; 
 
 void setup() {
@@ -23,7 +24,9 @@ void setup() {
   pinMode(LIMIT_FRONT, INPUT_PULLUP);
   pinMode(LIMIT_BACK, INPUT_PULLUP);
   pinMode(LIMIT_LEFT, INPUT_PULLUP);
-
+  pinMode(LIMIT_SERVO, INPUT_PULLUP);
+  
+  Serial.println("hacked the mainframe");
   //Start of the check-off process
   checkOff();
 
@@ -37,14 +40,15 @@ void loop() {
 
 void checkOff() {
   //Moves the robot to the back of the arena and then turns right
-  /*motors.moveBackward();
+  /**
+  motors.moveBackward();
   Serial.println("Moving backward; hit front limit switch to move left");
   while(!digitalRead(LIMIT_BACK)){
     //wait
   }
   //Moves the robot across the arena to the armoury, pausing when it hits the switch for 7 seconds
-  motors.moveLeft(); 
-  Serial.println("Moving left; hit left limit switch to pause");
+  motors.rideWall(); 
+  Serial.println("Riding wall left; hit left limit switch to pause");
   while(!digitalRead(LIMIT_LEFT)){
     //wait
   }
@@ -64,13 +68,19 @@ void checkOff() {
     //wait
   }
   motors.stopMoving();
-  */
   //Starts launching the balls at Casterly Rock
-  launcher.startFlywheel();
+  */
+  //launcher.startFlywheel();
   while (ballCounter < 12){
-    launcher.incrementBall();
     Serial.println("Shoot ball");
-    delay(ballCounter + shootTime);
+    while(!digitalRead(LIMIT_SERVO)){
+      launcher.incrementBall();
+    }
+    launcher.stopServo();
+    delay(1000);
+    launcher.incrementBall();
+    delay(100);
+    launcher.stopServo();
     ballCounter++;
   }
   launcher.stopFlywheel();
