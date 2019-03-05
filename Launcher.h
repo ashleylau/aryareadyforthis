@@ -13,6 +13,7 @@ class LauncherClass{
         void stopFlywheel();
         void incrementBall();
         void returnRotator();
+        void stopServo();
     private:
         void begin();
 };
