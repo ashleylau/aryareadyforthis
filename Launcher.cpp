@@ -48,8 +48,16 @@ Parameters:   None; if later set to move at different speeds this can be include
 Returns:      Nothing; function is of type void
 ******************************************************************************/
 void LauncherClass::incrementBall(){
-    myservo.writeMicroseconds(servoCC);
-    delay(460);
+    myservo.writeMicroseconds(servoCC);    
+}
+
+/******************************************************************************
+Function:     stopServo
+Contents:     This function is used to stop the servo from rotating
+Parameters:   None
+Returns:      Nothing; function is of type void
+******************************************************************************/
+void LauncherClass::stopServo(){
     myservo.writeMicroseconds(servoStop);
 }
 
@@ -71,6 +79,7 @@ void LauncherClass::begin( ) {
   //  Set up the pin modes
   pinMode(FLYWHEEL, OUTPUT);
   pinMode(SERVO, OUTPUT);
+  
 
   //Set up servo
   myservo.attach(SERVO);
