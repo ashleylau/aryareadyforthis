@@ -6,7 +6,7 @@ int front_back_dir1 = LOW;
 int front_back_dir2 = HIGH;
 int left_right_dir1 = LOW;
 int left_right_dir2 = HIGH;
-int speed = 70;
+int speed = 40;
 int lowSpeed = 5; 
 int stop = 0;
 
@@ -82,7 +82,7 @@ void MotorsClass::rideBackWall(){
     digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
-    analogWrite(FRONT_BACK_ENABLE, 48);
+    analogWrite(FRONT_BACK_ENABLE, 55);
     analogWrite(LEFT_RIGHT_ENABLE, lowSpeed);
 }
 
@@ -122,8 +122,8 @@ void MotorsClass::rideFrontWallRight(){
     digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
-    analogWrite(FRONT_BACK_ENABLE, speed);
-    analogWrite(LEFT_RIGHT_ENABLE, lowSpeed);
+    analogWrite(FRONT_BACK_ENABLE, 40);
+    analogWrite(LEFT_RIGHT_ENABLE, stop);
 }
 
 /******************************************************************************
@@ -139,7 +139,7 @@ void MotorsClass::moveRight(){
     digitalWrite(FRONT_BACK_DIR1, front_back_dir1);
     digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
     analogWrite(LEFT_RIGHT_ENABLE, stop);
-    analogWrite(FRONT_BACK_ENABLE, speed);
+    analogWrite(FRONT_BACK_ENABLE, 40);
 }
 
 /******************************************************************************

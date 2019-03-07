@@ -59,7 +59,7 @@ Returns:      Nothing; function is of type void
 ******************************************************************************/
 void LauncherClass::clearSwitch(){
     moveServo();
-    delay(100);
+    delay(150);
     stopServo();
 }
 
@@ -75,7 +75,6 @@ void LauncherClass::shootBall(){
     //wait
     }
     stopServo();
-    clearSwitch();
 }
 
 /******************************************************************************

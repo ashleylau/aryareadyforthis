@@ -7,7 +7,6 @@ void checkOff(void);
 void destroyWall(void);
 void towersFirst(void);
 void reload(void);
-void testUltrasonic(void);
 long getDistance(void);
 
 //NEED TO MAKE SURE WE STOP EVERYTHING AFTER 2:10
