@@ -42,45 +42,84 @@ void LauncherClass::stopFlywheel(){
 }
 
 /******************************************************************************
-Function:     incrementBall
-Contents:     This function is used to rotate the servo a seventh of the way to release ball.
+Function:     moveServo
+Contents:     This function is used to rotate the servo ata low speed.
 Parameters:   None; if later set to move at different speeds this can be included.
 Returns:      Nothing; function is of type void
 ******************************************************************************/
-void LauncherClass::incrementBall(){
-    myservo.writeMicroseconds(servoCC);    
+void LauncherClass::moveServo(){
+    myservo.writeMicroseconds(1600);
+}
+
+/******************************************************************************
+Function:     clearSwitch
+Contents:     This function is used to rotate the servo enough to clear the limit switch.
+Parameters:   None
+Returns:      Nothing; function is of type void
+******************************************************************************/
+void LauncherClass::clearSwitch(){
+    moveServo();
+    delay(100);
+    stopServo();
+}
+
+/******************************************************************************
+Function:     shootBall
+Contents:     This function is used to rotate the servo enough to shoot one ball.
+Parameters:   None
+Returns:      Nothing; function is of type void
+******************************************************************************/
+void LauncherClass::shootBall(){
+    moveServo();
+    while(!digitalRead(LIMIT_SERVO)){
+    //wait
+    }
+    stopServo();
+    clearSwitch();
 }
 
 /******************************************************************************
 Function:     stopServo
-Contents:     This function is used to stop the servo from rotating
-Parameters:   None
+Contents:     This function is used to stop the rotatation of the servo.
+Parameters:   None; if later set to move at different speeds this can be included.
 Returns:      Nothing; function is of type void
 ******************************************************************************/
 void LauncherClass::stopServo(){
-    myservo.writeMicroseconds(servoStop);
+    myservo.writeMicroseconds(1500);
 }
 
 /******************************************************************************
-Function:     resetBall
-Contents:     This function is used to return the rotater to its starting position.
+Function:     powerServo
+Contents:     This function is used to give power to servo, causes jerk.
 Parameters:   None
 Returns:      Nothing; function is of type void
 ******************************************************************************/
-void LauncherClass::returnRotator(){
-    myservo.write(-270);
+void LauncherClass::powerServo(){
+    digitalWrite(SERVO_MOSFET, HIGH);
+}
+
+/******************************************************************************
+Function:     turnOffServo
+Contents:     This function is used to cut all power to servo.
+Parameters:   None
+Returns:      Nothing; function is of type void
+******************************************************************************/
+void LauncherClass::turnOffServo(){
+    digitalWrite(SERVO_MOSFET, LOW);
 }
 
 /*----------Private Functions---------*/
 //Private function to initialize pins when the motor class is first included
 void LauncherClass::begin( ) { 
-  Serial.begin(9600);
-
   //  Set up the pin modes
   pinMode(FLYWHEEL, OUTPUT);
-  pinMode(SERVO, OUTPUT);
-  
+  pinMode(SERVO_LOGIC, OUTPUT);
+  pinMode(SERVO_MOSFET, OUTPUT);
+  pinMode(LIMIT_SERVO, INPUT_PULLUP);
+
+  digitalWrite(SERVO_MOSFET, LOW);
 
   //Set up servo
-  myservo.attach(SERVO);
+  myservo.attach(SERVO_LOGIC, 1000, 2000);
+  myservo.writeMicroseconds(1500);
 }
