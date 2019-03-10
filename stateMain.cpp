@@ -2,6 +2,7 @@
 #include <Metro.h>
 #include <Motors.h>
 #include <Launcher.h>
+#include <NewPing.h>
 
 //Global variables
 #define LIMIT_LEFT      9
@@ -36,6 +37,11 @@ enum state{
 state currentState;
 
 long duration, inches;
+
+int getDistance();
+
+NewPing sonar(DIST_TRIG, DIST_ECHO, 250);
+
 
 static Metro reloadTimer = Metro(3000);
 static Metro repositionTimer = Metro(750);
@@ -178,5 +184,9 @@ void loop() {
             motors.stopMoving();
             shootingTimer.reset();
         }
-    }
+    }   
+}
+
+int getDistance(){
+  return sonar.ping_in();
 }
