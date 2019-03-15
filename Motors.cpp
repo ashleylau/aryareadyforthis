@@ -31,7 +31,7 @@ void MotorsClass::moveForward(){
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
     analogWrite(FRONT_BACK_ENABLE, stop);
-    analogWrite(LEFT_RIGHT_ENABLE, speed);
+    analogWrite(LEFT_RIGHT_ENABLE, 60);
 }
 
 /******************************************************************************
@@ -47,7 +47,7 @@ void MotorsClass::moveBackward(){
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
     analogWrite(FRONT_BACK_ENABLE, stop);
-    analogWrite(LEFT_RIGHT_ENABLE, speed);
+    analogWrite(LEFT_RIGHT_ENABLE, 60);
 }
 
 /******************************************************************************
@@ -102,7 +102,7 @@ void MotorsClass::rideFrontWallLeft(){
     digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
-    analogWrite(FRONT_BACK_ENABLE, speed);
+    analogWrite(FRONT_BACK_ENABLE, 50);
     analogWrite(LEFT_RIGHT_ENABLE, lowSpeed);
 }
 
@@ -122,8 +122,8 @@ void MotorsClass::rideFrontWallRight(){
     digitalWrite(FRONT_BACK_DIR2, front_back_dir2);
     digitalWrite(LEFT_RIGHT_DIR1, left_right_dir1);
     digitalWrite(LEFT_RIGHT_DIR2, left_right_dir2);
-    analogWrite(FRONT_BACK_ENABLE, 40);
-    analogWrite(LEFT_RIGHT_ENABLE, stop);
+    analogWrite(FRONT_BACK_ENABLE,50);
+    analogWrite(LEFT_RIGHT_ENABLE, 30);
 }
 
 /******************************************************************************

@@ -3,8 +3,7 @@
 
 /*--------------Global Variables----------------*/
 //Flywheel motor pins defined as if using motor driver that requires 3 output pins
-#define SERVO_LOGIC         6  //PWM pin
-#define SERVO_MOSFET        7  //Not PWM
+#define LOADER_MOSFET       7  //Not PWM
 #define LIMIT_SERVO         8
 #define FLYWHEEL            15 //Not PWM
 
